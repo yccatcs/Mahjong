@@ -13,23 +13,54 @@ namespace Mahjong
 
         private static Dictionary<Tile, int> m_tileCount = null;
 
+        internal static (int begin, int end) GetNumberRange()
+        {
+            return (Terminal.Li, Terminal.Kyuu);
+        }
+
+        internal static (int begin, int end) GetWindRange()
+        {
+            return (Honour.Wind.Ton, Honour.Wind.Pei);
+        }
+
+        internal static (int begin, int end) GetDragonRange()
+        {
+            return (Honour.Dragon.Haku, Honour.Dragon.Chun);
+        }
+
+        internal static (int begin, int end) GetRange(Suit suit)
+        {
+            if (suit == Suit.z)
+                return (Honour.Wind.Ton, Honour.Dragon.Chun);
+            else
+                return GetNumberRange();
+        }
+
+        internal static (int begin, int end) GetSequentialRange(Tile tile)
+        {
+            if (tile.IsWind())
+                return GetWindRange();
+            if (tile.IsDragon())
+                return GetDragonRange();
+            return GetNumberRange();
+        }
+
+        internal static Tile GetNextTile(Tile tile)
+        {
+            return new Tile(Generic.GetNextInRangeInclusive(tile.GetNumber(), GetSequentialRange(tile)), tile.GetSuit());
+        }
+
         internal static Dictionary<Tile, int> GetTileCount()
         {
             if (m_tileCount != null)
                 return m_tileCount;
 
             m_tileCount = new();
-            (int min, int max) range;
             const int countPerTile = GameConfig.CountPerTile;
             const int countAkadora = Akadora.Count;
             foreach (Suit suit in Enum.GetValues(typeof(Suit)))
             {
-                if (suit == Suit.z)
-                    range = ((int)Honour.Wind.Ton, (int)Honour.Dragon.Chun);
-                else
-                    range = (Terminal.Li, Terminal.Kyuu);
-
-                foreach (int number in Generic.RangeInclusive(range.min, range.max))
+                foreach (int number in Generic.RangeInclusive(GetRange(suit)))
                 {
                     if (suit != Suit.z && number == Akadora.Uu)
                     {
@@ -53,6 +84,16 @@ namespace Mahjong
                 {
                     yield return tile;
                 }
+            }
+        }
+
+        internal static IEnumerable<Tile> GetTilesType()
+        {
+            foreach ((Tile tile, _) in GetTileCount())
+            {
+                if (tile.IsAkadora())
+                    continue;
+                yield return tile;
             }
         }
     }

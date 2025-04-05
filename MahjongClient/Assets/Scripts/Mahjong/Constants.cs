@@ -14,40 +14,40 @@ namespace Mahjong.Constants
 
     internal static class Honour
     {
-        internal enum Wind
+        internal static class Wind
         {
             /// <summary>
             /// 东
             /// </summary>
-            Ton = 1,
+            internal const int Ton = 1;
             /// <summary>
             /// 南
             /// </summary>
-            Nan = 2,
+            internal const int Nan = 2;
             /// <summary>
             /// 西
             /// </summary>
-            Shaa = 3,
+            internal const int Shaa = 3;
             /// <summary>
             /// 北
             /// </summary>
-            Pei = 4,
+            internal const int Pei = 4;
         }
 
-        internal enum Dragon
+        internal static class Dragon
         {
             /// <summary>
             /// 白
             /// </summary>
-            Haku = 5,
+            internal const int Haku = 5;
             /// <summary>
             /// 发
             /// </summary>
-            Hatsu = 6,
+            internal const int Hatsu = 6;
             /// <summary>
             /// 中
             /// </summary>
-            Chun = 7,
+            internal const int Chun = 7;
         }
     }
 
