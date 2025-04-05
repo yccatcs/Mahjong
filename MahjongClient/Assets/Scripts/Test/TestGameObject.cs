@@ -7,6 +7,7 @@ namespace Mahjong.Test
         internal void Start()
         {
             DoTestTile();
+            DoTestHand();
         }
 
         internal void DoTestTile()
@@ -16,6 +17,15 @@ namespace Mahjong.Test
             // TestTile.PrintAllTilesRandom();
             // TestTile.PrintRandomTiles();
             TestTile.PrintSortedRandomTiles();
+        }
+
+        internal void DoTestHand()
+        {
+            // TestHand.PrintHand();
+            // TestHand.PrintHandDictionary();
+            // TestHand.PrintHandByStringInput();
+            TestHand.PrintWinningShapeByStringInput();
+            TestHand.PrintTenpai();
         }
 
         internal void Update()
