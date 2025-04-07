@@ -1,16 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
+using Mahjong.UI;
 using UnityEngine;
 
 namespace Mahjong.Test
 {
     internal static class TestHand
     {
-        internal static void PrintHand()
+        internal static void PrintHand(UIHand uiHand = null)
         {
             Debug.Log($"[Mahjong][Test][TestHand] PrintHand");
             List<Tile> tiles = TestTile.GetRandomTiles(14).ToList();
-            Hand hand = new(tiles.Take(13), tiles.Last());
+            List<Tile> tilesSorted = new(tiles.Take(13));
+            tilesSorted.Sort();
+            Hand hand = new(tilesSorted, tiles.Last());
+            if (uiHand != null)
+                uiHand.Init(hand);
             Debug.Log(hand);
         }
         
@@ -39,12 +44,14 @@ namespace Mahjong.Test
             }
         }
 
-        internal static void PrintWinningShapeByStringInput()
+        internal static void PrintWinningShapeByStringInput(UIHand uiHand = null)
         {
             Debug.Log($"[Mahjong][Test][TestHand] PrintWinningShapeByStringInput");
             string str = "1m1m1m1m2m2m2m2m3m3m3m3m0m";
             string strDraw = "5m";
             Hand hand = new(str, strDraw);
+            if (uiHand != null)
+                uiHand.Init(hand);
             Debug.Log(hand);
             foreach (WinningShape winningShape in hand.GetWinningShape())
             {
@@ -55,7 +62,7 @@ namespace Mahjong.Test
         internal static void PrintTenpai()
         {
             Debug.Log($"[Mahjong][Test][TestHand] PrintTenpai");
-            string str = "1m2m3m4m5m6m4p5p6p8p8p5s6s";
+            string str = "1m2m3m4m0m6m4p0p6p8p8p0s6s";
             Hand hand = new(str, string.Empty);
             Debug.Log(hand);
             foreach (Tile tile in hand.GetTileDictionary().GetTenpai())
