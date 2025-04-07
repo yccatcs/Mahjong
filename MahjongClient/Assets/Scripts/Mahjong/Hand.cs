@@ -43,14 +43,32 @@ namespace Mahjong
             m_tileGroups = new();
         }
 
+        internal List<Tile> GetTiles()
+        {
+            return m_tiles;
+        }
+
+        internal Tile GetTileDraw()
+        {
+            return m_tileDraw;
+        }
+
+        internal void SetTileDraw(Tile tile)
+        {
+            m_tileDraw = tile;
+        }
+
         internal List<TileGroup> GetTileGroups()
         {
             return m_tileGroups;
         }
 
-        internal Dictionary<Tile, int> GetTileDictionary()
+        internal Dictionary<Tile, int> GetTileDictionary(bool bIncludeTileDraw = true)
         {
-            return m_tiles.ToTiles().AddTile(m_tileDraw);
+            Dictionary<Tile, int> tiles = m_tiles.ToTiles();
+            if (bIncludeTileDraw)
+                tiles.AddTile(m_tileDraw);
+            return tiles;
         }
 
         public override string ToString()

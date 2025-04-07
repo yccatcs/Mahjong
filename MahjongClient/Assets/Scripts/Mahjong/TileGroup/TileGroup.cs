@@ -14,20 +14,17 @@ namespace Mahjong
 
         protected TileGroup(Tile tile)
         {
-            m_tiles = tile.Repeat(GetCount()).ToList();
+            SetTiles(tile);
         }
 
         protected TileGroup(Dictionary<Tile, int> tiles) : this()
         {
-            foreach ((Tile tile, int count) in tiles)
-            {
-                m_tiles.AddRange(tile.Repeat(count).ToList());
-            }
+            SetTiles(tiles);
         }
 
         protected TileGroup(List<Tile> tiles)
         {
-            m_tiles = tiles;
+            SetTiles(tiles);
         }
 
         public override string ToString()
@@ -56,6 +53,24 @@ namespace Mahjong
         public override int GetHashCode()
         {
             return string.Join(string.Empty, m_tiles).GetHashCode();
+        }
+
+        internal void SetTiles(Tile tile)
+        {
+            m_tiles = tile.Repeat(GetCount()).ToList();
+        }
+
+        internal void SetTiles(Dictionary<Tile, int> tiles)
+        {
+            foreach ((Tile tile, int count) in tiles)
+            {
+                m_tiles.AddRange(tile.Repeat(count).ToList());
+            }
+        }
+
+        internal void SetTiles(List<Tile> tiles)
+        {
+            m_tiles = tiles;
         }
 
         /// <summary>
